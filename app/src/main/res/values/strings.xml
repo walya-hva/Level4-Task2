@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Level4-Task2</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="game_fragment_label">Game Fragment</string>
+    <string name="history_fragment_label">History Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+</resources>
