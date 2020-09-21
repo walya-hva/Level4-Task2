@@ -3,10 +3,15 @@ package nl.hva.fdmci.mad.level4_task2
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.view.menu.ActionMenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
