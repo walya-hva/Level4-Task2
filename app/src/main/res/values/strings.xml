@@ -6,5 +6,14 @@
     <string name="history_fragment_label">History Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="txt_welcome">Welcome</string>
+    <string name="txt_instructions">Instructions: select rock, paper or scissors to play.</string>
+    <string name="tv_statistics_hdr">Your all time statistics:</string>
+    <string name="tv_win">Win:</string>
+    <string name="tv_draw">Draw:</string>
+    <string name="tv_lose">Lose:</string>
+    <string name="tv_versus">V.S.</string>
+    <string name="tv_computer">Computer</string>
+    <string name="tv_player">Player</string>
 
 </resources>
