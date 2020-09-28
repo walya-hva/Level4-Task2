@@ -131,7 +131,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn_fist"
+        android:id="@+id/btn_rock"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -159,7 +159,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_scissors"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_fist" />
+        app:layout_constraintStart_toEndOf="@+id/btn_rock" />
 
     <ImageButton
         android:id="@+id/btn_scissors"
