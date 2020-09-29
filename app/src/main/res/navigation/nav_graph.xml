@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/GameFragment"
-        android:name="nl.hva.fdmci.mad.level4_task2.GameFragment"
+        android:name="nl.hva.fdmci.mad.level4_task2.ui.GameFragment"
         android:label="@string/game_fragment_label"
         tools:layout="@layout/fragment_game">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/HistoryFragment"
-        android:name="nl.hva.fdmci.mad.level4_task2.HistoryFragment"
+        android:name="nl.hva.fdmci.mad.level4_task2.ui.HistoryFragment"
         android:label="@string/history_fragment_label"
         tools:layout="@layout/fragment_history">
 

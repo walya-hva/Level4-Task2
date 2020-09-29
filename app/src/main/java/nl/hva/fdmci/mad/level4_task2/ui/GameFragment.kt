@@ -1,17 +1,20 @@
-package nl.hva.fdmci.mad.level4_task2
+package nl.hva.fdmci.mad.level4_task2.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nl.hva.fdmci.mad.level4_task2.R
 import nl.hva.fdmci.mad.level4_task2.model.Game
 import nl.hva.fdmci.mad.level4_task2.model.Weapon
 import nl.hva.fdmci.mad.level4_task2.repository.GameRepository
@@ -37,11 +40,15 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        gameRepository = GameRepository(requireContext())
+
+        (activity as AppCompatActivity).toolbar.setNavigationIcon(null)
+        (activity as AppCompatActivity).toolbar.setNavigationOnClickListener {}
+
         btn_rock.setOnClickListener{ fight(Weapon.ROCK) }
         btn_paper.setOnClickListener { fight(Weapon.PAPER) }
         btn_scissors.setOnClickListener { fight(Weapon.SCISSORS) }
 
-        gameRepository = GameRepository(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,7 +94,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        val game = Game(computerWeapon = computerWeapon, playerWeapon = playerWeapon,
+        val game = Game(computerWeapon = computerWeapon.toString(), playerWeapon = playerWeapon.toString(),
             date = Date.from(Instant.now()), winner = winner
         )
 
