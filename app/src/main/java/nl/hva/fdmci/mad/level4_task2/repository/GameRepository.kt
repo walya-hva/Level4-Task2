@@ -15,10 +15,12 @@ class GameRepository(context: Context) {
     }
 
     suspend fun getAllGames(): List<Game> {
+        println("YEAHHHHH: " + gameDao.getAllGames().size)
         return gameDao.getAllGames()
     }
 
     suspend fun insertGame(game: Game) {
+        println("YEAHHHHH: " + game.date)
         gameDao.deleteGame(game)
     }
 

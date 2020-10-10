@@ -49,6 +49,37 @@ class GameFragment : Fragment() {
         btn_paper.setOnClickListener { fight(Weapon.PAPER) }
         btn_scissors.setOnClickListener { fight(Weapon.SCISSORS) }
 
+
+        setStatistics()
+
+    }
+
+    private fun setStatistics() {
+        var winCount = 0;
+        var drawCount = 0;
+        var lossCount = 0;
+
+        mainScope.launch {
+            withContext(Dispatchers.IO) {
+                val gamesList = gameRepository.getAllGames()
+                gamesList.forEach { game: Game ->
+                    when(game.winner){
+                        "Computer" -> {lossCount++}
+                        "You" -> {winCount++}
+                        "Draw" -> {drawCount++}
+                    }
+                }
+            }
+        }
+
+        tv_win.setText(R.string.tv_win)
+        tv_win.append(" $winCount")
+
+        tv_draw.setText(R.string.tv_draw)
+        tv_draw.append(" $drawCount")
+
+        tv_lose.setText(R.string.tv_lose)
+        tv_lose.append(" $lossCount")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -103,5 +134,6 @@ class GameFragment : Fragment() {
                 gameRepository.insertGame(game)
             }
         }
+        setStatistics()
     }
 }
