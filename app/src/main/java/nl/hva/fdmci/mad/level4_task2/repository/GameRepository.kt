@@ -19,7 +19,7 @@ class GameRepository(context: Context) {
     }
 
     suspend fun insertGame(game: Game) {
-        gameDao.deleteGame(game)
+        gameDao.insertGame(game)
     }
 
     suspend fun deleteGame(game: Game) {
@@ -28,6 +28,18 @@ class GameRepository(context: Context) {
 
     suspend fun deleteAllGames() {
         gameDao.deleteAllGames()
+    }
+
+    suspend fun getWinCount(): Int {
+        return gameDao.getWinCount()
+    }
+
+    suspend fun getDrawCount(): Int {
+        return gameDao.getDrawCount()
+    }
+
+    suspend fun getLoseCount(): Int {
+        return gameDao.getLoseCount()
     }
 
 }

@@ -65,7 +65,7 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar?.title = "Your Game History"
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_history)
 
         (activity as AppCompatActivity).toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         (activity as AppCompatActivity).toolbar.setNavigationOnClickListener {
@@ -80,7 +80,6 @@ class HistoryFragment : Fragment() {
 
             gameList.addAll(games);
             gameAdapter.notifyDataSetChanged()
-            println(gameList.size)
         }
 
         initRv()

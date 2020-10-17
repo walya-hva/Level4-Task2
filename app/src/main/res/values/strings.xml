@@ -15,5 +15,8 @@
     <string name="tv_versus">V.S.</string>
     <string name="tv_computer">Computer</string>
     <string name="tv_player">Player</string>
-
+    <string name="msg_player_win">You win!</string>
+    <string name="msg_computer_win">Computer wins!</string>
+    <string name="msg_draw_win">Draw!</string>
+    <string name="title_history">Your Game History</string>
 </resources>

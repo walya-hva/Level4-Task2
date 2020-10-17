@@ -24,10 +24,17 @@ class GameAdapter(private val games: List<Game>) : Adapter<GameAdapter.ViewHolde
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(game: Game) {
-            if (game.winner != "Draw") {
-                itemView.tv_winner.text = game.winner + " wins!"
-            } else {
-                itemView.tv_winner.text = game.winner + "!"
+
+            when(game.winner) {
+                "Draw" -> {
+                    itemView.tv_winner.setText(R.string.msg_draw_win)
+                }
+                "Computer" -> {
+                    itemView.tv_winner.setText(R.string.msg_computer_win)
+                }
+                "You" -> {
+                    itemView.tv_winner.setText(R.string.msg_player_win)
+                }
             }
 
             itemView.tv_game_date.text = game.date.toString()

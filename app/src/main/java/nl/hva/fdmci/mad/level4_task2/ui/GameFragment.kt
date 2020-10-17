@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -28,10 +29,13 @@ class GameFragment : Fragment() {
 
     private lateinit var gameRepository: GameRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
+    private var winCount = 0
+    private var drawCount = 0
+    private var loseCount = 0
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
@@ -40,15 +44,19 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        gameRepository = GameRepository(requireContext())
 
-        (activity as AppCompatActivity).toolbar.setNavigationIcon(null)
-        (activity as AppCompatActivity).toolbar.setNavigationOnClickListener {}
+        mainScope.launch {
+            withContext(Dispatchers.IO) {
+                gameRepository = GameRepository(requireContext())
+                setStatistics()
+            }
+        }
 
-        btn_rock.setOnClickListener{ fight(Weapon.ROCK) }
+        (activity as AppCompatActivity).toolbar.navigationIcon = null
+
+        btn_rock.setOnClickListener { fight(Weapon.ROCK) }
         btn_paper.setOnClickListener { fight(Weapon.PAPER) }
         btn_scissors.setOnClickListener { fight(Weapon.SCISSORS) }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,41 +75,99 @@ class GameFragment : Fragment() {
         val computerWeapon = Weapon.values().random()
         img_computer.setImageResource(computerWeapon.resourceId)
 
-
         var winner = ""
 
-        when(playerWeapon){
+        when (playerWeapon) {
             Weapon.ROCK -> {
                 winner = when (computerWeapon) {
-                    Weapon.PAPER -> { "Computer" }
-                    Weapon.SCISSORS -> { "You" }
-                    Weapon.ROCK -> { "Draw" }
+                    Weapon.PAPER -> {
+                        "Computer"
+                    }
+                    Weapon.SCISSORS -> {
+                        "You"
+                    }
+                    Weapon.ROCK -> {
+                        "Draw"
+                    }
                 }
             }
             Weapon.PAPER -> {
                 winner = when (computerWeapon) {
-                    Weapon.PAPER -> { "Draw" }
-                    Weapon.SCISSORS -> { "Computer" }
-                    Weapon.ROCK -> { "You" }
+                    Weapon.PAPER -> {
+                        "Draw"
+                    }
+                    Weapon.SCISSORS -> {
+                        "Computer"
+                    }
+                    Weapon.ROCK -> {
+                        "You"
+                    }
                 }
             }
             Weapon.SCISSORS -> {
                 winner = when (computerWeapon) {
-                    Weapon.PAPER -> { "You" }
-                    Weapon.SCISSORS -> { "Draw" }
-                    Weapon.ROCK -> { "Computer" }
+                    Weapon.PAPER -> {
+                        "You"
+                    }
+                    Weapon.SCISSORS -> {
+                        "Draw"
+                    }
+                    Weapon.ROCK -> {
+                        "Computer"
+                    }
                 }
             }
         }
 
-        val game = Game(computerWeapon = computerWeapon.toString(), playerWeapon = playerWeapon.toString(),
+        val game = Game(
+            computerWeapon = computerWeapon.toString(), playerWeapon = playerWeapon.toString(),
             date = Date.from(Instant.now()), winner = winner
         )
 
         mainScope.launch {
             withContext(Dispatchers.IO) {
                 gameRepository.insertGame(game)
+                setStatistics()
+            }
+        }
+
+        winnerDisplay(winner)
+
+    }
+
+    private fun winnerDisplay(winner: String) {
+        when(winner){
+            "You" -> {
+                tv_result.setText(R.string.msg_player_win)
+            }
+            "Computer" -> {
+                tv_result.setText(R.string.msg_computer_win)
+            }
+            "Draw" -> {
+                tv_result.setText(R.string.msg_draw_win)
             }
         }
     }
+
+    private suspend fun setStatistics() {
+
+        winCount = gameRepository.getWinCount()
+        drawCount = gameRepository.getDrawCount()
+        loseCount = gameRepository.getLoseCount()
+
+        mainScope.launch {
+            withContext(Dispatchers.Main){
+                tv_win.setText(R.string.tv_win)
+                tv_win.append(" $winCount")
+
+                tv_draw.setText(R.string.tv_draw)
+                tv_draw.append(" $drawCount")
+
+                tv_lose.setText(R.string.tv_lose)
+                tv_lose.append(" $loseCount")
+            }
+        }
+
+    }
+
 }
